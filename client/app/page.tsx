@@ -74,6 +74,19 @@ async function handleToggle(todo: Todo) {
 }
 
 
+async function handleDelete(id: string) {
+  try{
+    const res = await fetch(`${API}/todos/${id}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    setTodos((prev) => prev.filter((t) => t.id !== id));
+  } catch (err) {
+    setError(err instanceof Error ? err.message : "Unknown error");
+  }
+  
+}
+
 
   if(loading) return <p className="p-8">Loading...</p>;
   if (error) return <p className="p-8 text-red-500">Error: {error}</p>;
@@ -104,11 +117,23 @@ async function handleToggle(todo: Todo) {
             <li 
             key={todo.id}
             onClick={() => handleToggle(todo)}
-            className="boder rounded p-3 flex items-center gap-3 cursor-pointer hover:bg-gray-900"
+            className="border rounded p-3 flex items-center gap-3 cursor-pointer hover:bg-gray-900"
             >
-              <span className={todo.completed ? "line-through text-gray-400" : ""}>
-                {todo.title}
+              <span
+              className={`flex-1 ${todo.completed ? "line-through text-gray-400": ""}`}
+              >
+              {todo.title}
               </span>
+              <button 
+              onClick={(e) => {
+              e.stopPropagation();
+              handleDelete(todo.id);
+              }}
+              className=" text-red-400 hover:text-red-600 px-2"
+              aria-label= "Delete todo"
+              >
+              x
+              </button>
             </li>
           ))}
         </ul>
