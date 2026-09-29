@@ -17,6 +17,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [newTitle, setNewTitle] = useState("");
+  const [filter, setFilter] = useState< "all" | "active" | "completed">("all");
 
 
   useEffect(() => {
@@ -88,6 +89,13 @@ async function handleDelete(id: string) {
 }
 
 
+
+const visibleTodos = todos.filter((t) => {
+  if (filter === "active") return !t.completed;
+  if (filter === "completed") return t.completed;
+  return true;
+});
+
   if(loading) return <p className="p-8">Loading...</p>;
   if (error) return <p className="p-8 text-red-500">Error: {error}</p>;
 
@@ -109,11 +117,25 @@ async function handleDelete(id: string) {
     Add
   </button>
 </form>
-      {todos.length === 0 ? (
+
+<div className="flex gap-2 mb-4">
+  {(["all", "active", "completed"] as const).map((f) => (
+    <button
+      key={f}
+      onClick={() => setFilter(f)}
+      className={`border rounded px-3 py-1 capitalize ${
+        filter === f ? "bg-gray-700" : "hover:bg-gray-800"
+      }`}
+    >
+      {f}
+    </button>
+  ))}
+</div>
+   {visibleTodos.length === 0 ? (
         <p className="text-gray-500">No todos yet.</p>
       ) : (
         <ul className="space-y-2">
-          {todos.map((todo) => (
+          {visibleTodos.map((todo) => (
             <li 
             key={todo.id}
             onClick={() => handleToggle(todo)}

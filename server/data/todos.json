@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": "8881142e-4e43-4efa-ba7c-58b7ec5bb687",
+    "title": "Finishing the todo app",
+    "completed": true,
+    "createdAt": "2026-09-29T09:19:21.568Z"
+  },
+  {
+    "id": "1aa2690b-ebc8-4e1a-8af5-33602dbb2924",
+    "title": "Submitting to the mentor",
+    "completed": false,
+    "createdAt": "2026-09-29T09:19:31.920Z"
+  }
+]
