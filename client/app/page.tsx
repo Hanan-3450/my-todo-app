@@ -56,6 +56,25 @@ export default function Home() {
     }
   }
 
+async function handleToggle(todo: Todo) {
+  try{
+    const res = await fetch(`${API}/todos/${todo.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify({ completed: !todo.completed}),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const updated = (await res.json()) as Todo;
+    setTodos((prev) => 
+    prev.map((t) => (t.id === updated.id ? updated: t))
+  );
+  } catch (err) {
+    setError(err instanceof Error ? err.message : "Unknown error");
+  }
+}
+
+
+
   if(loading) return <p className="p-8">Loading...</p>;
   if (error) return <p className="p-8 text-red-500">Error: {error}</p>;
 
@@ -82,9 +101,10 @@ export default function Home() {
       ) : (
         <ul className="space-y-2">
           {todos.map((todo) => (
-            <li
-              key={todo.id}
-              className="border rounded p-3 flex items-center gap-3"
+            <li 
+            key={todo.id}
+            onClick={() => handleToggle(todo)}
+            className="boder rounded p-3 flex items-center gap-3 cursor-pointer hover:bg-gray-900"
             >
               <span className={todo.completed ? "line-through text-gray-400" : ""}>
                 {todo.title}
