@@ -128,7 +128,7 @@ export default function Home() {
         </form>
 
         <div className="flex gap-2 mb-6">
-          {(["all", "active", "completed"] as const).map((f) => (
+          {(["active", "completed", "all"] as const).map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
