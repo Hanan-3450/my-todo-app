@@ -1,0 +1,12 @@
+{
+    "experimentalServices": {
+        "web": {
+            "entrypoint": "client",
+            "routePrefix": "/"
+        },
+        "api": {
+            "entrypoint": "server",
+            "routerPrefix": "/todos"
+        }
+    }
+}

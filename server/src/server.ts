@@ -3,12 +3,13 @@ import cors from "cors";
 import todoRoutes from "./routes/todos";
 
 const app = express();
-const PORT = 4000;
+//const PORT = 4000;
 
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
 
 // Routes
 app.use("/todos", todoRoutes);
@@ -19,6 +20,8 @@ app.get("/", (_req,res) => {
 });
 
 // Start
-app.listen(PORT, () => {
-    console.log(`server running on http://localhost:${PORT}`);
-});
+//app.listen(PORT, () => {
+  //  console.log(`server running on http://localhost:${PORT}`);
+//});
+
+export default app;

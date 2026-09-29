@@ -9,7 +9,8 @@ export interface Todo {
     createdAt: string;
 }
 
-const FILE = path.join(__dirname, "..", "data", "todos.json");
+const _DATA_DIR= process.env._DATA_DIR || path.join(__dirname, "..", "data");
+const FILE = path.join(_DATA_DIR, "todos.json");
 
 export async function readTodos(): Promise<Todo[]> {
     const raw = await  fs.readFile(FILE, "utf-8");
